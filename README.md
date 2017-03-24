@@ -25,7 +25,6 @@ Found an issue? Report to [Praveen Mayakar](https://github.com/Praveenmayakar)
 1. Make a branch. Please, only *one* branch per issue
 2. Perform your changes
 3. Run the linter 
- - **Yarn**: `yarn run eslint`
- - **NPM**: `npm run-script eslint`
+ `yarn run eslint`
 4. Make a [Pull Request](../../pulls) and assign at least **two reviewers**. If you are unsure who should review, assign Praveen
 
