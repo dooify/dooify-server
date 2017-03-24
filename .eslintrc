@@ -1,0 +1,45 @@
+{
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "google"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+  },
+  "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/prop-types": [0],
+    "semi": [2, "never"],
+    "max-len": [2, 200, 2],
+    "generator-star-spacing": 0,
+    "indent": ["error", 4],
+    "camelcase": 0,
+    "space-before-function-paren": ["error", "never"],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-invalid-this": 0,
+    "require-jsdoc": ["error", {
+        "require": {
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": false,
+          "ArrowFunctionExpression": false
+        }
+    }],
+  },
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "7",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "parser": "babel-eslint",
+}

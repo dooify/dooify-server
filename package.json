@@ -1,0 +1,39 @@
+{
+    "name": "babel-graphql-server-starterkit",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha",
+        "start": "node dist/index",
+        "build": "babel src -d dist --source-maps",
+        "watch": "babel-watch src/index",
+        "eslint": "eslint src test",
+        "clean": "rimraf dist"
+    },
+    "author": "Mika Wikman",
+    "license": "",
+    "dependencies": {
+        "body-parser": "^1.17.1",
+        "express": "^4.15.2",
+        "graphql": "^0.9.1",
+        "graphql-server-express": "^0.6.0",
+        "graphql-tools": "^0.10.1",
+        "source-map-support": "^0.4.14"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.24.0",
+        "babel-core": "^6.24.0",
+        "babel-eslint": "^7.1.1",
+        "babel-polyfill": "^6.23.0",
+        "babel-preset-es2015": "^6.24.0",
+        "babel-preset-stage-0": "^6.22.0",
+        "babel-watch": "^2.0.6",
+        "chai": "^3.5.0",
+        "eslint": "^3.18.0",
+        "eslint-plugin-babel": "^4.1.1",
+        "mocha": "^3.2.0",
+        "rimraf": "^2.6.1",
+        "sinon": "^2.1.0"
+    }
+}
