@@ -1,16 +1,30 @@
-const schema = `
-  schema {
-    query: Query
-  }
-`
+export default `
+    schema {
+        query: Query
+    }
 
-const Query = `
-  type Query {
-    helloWorld: String!
-  }
-`
+    type Query {
+        recommendations: [Ad]
+    }
 
-export default [
-  schema,
-  Query
-]
+    type Profile {
+        id: ID!
+        userId: ID!
+        firstName: String!
+        lastName: String!
+        description: String!
+        imageId: String
+        language: String
+    }
+
+    type Ad {
+        id: ID!
+        userId: ID!
+        title: String!
+        description: String!
+        address: String!
+        hours: String!
+        imageId: String
+        profile: Profile!
+    }
+`
