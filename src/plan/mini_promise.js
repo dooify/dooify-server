@@ -29,5 +29,5 @@ export default MiniPromise = function() {
         return cb = newCb;
       }
     }
-  };
+  }
 };

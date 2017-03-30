@@ -4,7 +4,13 @@ export default `
     }
 
     type Query {
-        recommendations: [Ad]
+        recommendations: [Recommendation]
+    }
+
+    type Recommendation {
+        id: ID!
+        adId: ID!
+        ad: Ad!
     }
 
     type Profile {

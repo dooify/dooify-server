@@ -1,8 +1,10 @@
 import Plan from './plan'
 import c from './business/commonTasks'
+import Ad from './db/ad'
 
 export default {
     Query: {
+
         recommendations: () => new Promise( (resolve, reject) => {
             const ads = []
             const picked = {}
@@ -13,6 +15,8 @@ export default {
                     ads.push(ad)
                 },
             )({}).then( () => {
+
+                const recommendations = []
                 let target = 8
                 if (ads.length < target) {
                     target = Math.ceil(ads.length / 2)
@@ -23,21 +27,32 @@ export default {
 
                     let ad = ads[Math.floor(Math.random()*ads.length)]
 
-                    while(picked[ad.get('id')])
+                    while(picked[ad.get('id')]) {
                         ad = ads[Math.floor(Math.random()*ads.length)]
+                    }
 
                     picked[ad.get('id')] = true
 
-                    r = {
-                        recommendation: {
-                            id: ad.get('id'),
-                            adId: ad.get('id'),
-                        }
-                    }
-
-                    cb(r)
+                    recommendations.push({
+                        id: ad.get('id'),
+                        adId: ad.get('id'),
+                    })
                 }
+
+                resolve(recommendations)
             })
-        })
+        }),
+
+    },
+
+    Recommendation: {
+        ad: ({adId}) => new Promise( (resolve, reject) => {
+
+            Ad.find(adId, (ad) => {
+                ad = ad.dump()
+                console.log(ad)
+                resolve(ad)
+            })
+        }),
     }
 }
