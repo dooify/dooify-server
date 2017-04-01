@@ -1,35 +1,39 @@
 import query from '../query'
+import {findOne} from './commonTasks'
+import { GraphQLScalarType } from 'graphql'
 
 export default {
-    Query: {
+    Date: new GraphQLScalarType({
+        name: 'Date',
+        description: 'A Date in ISO format',
+        serialize(value) {
+            console.log(value)
+            let result = value && value.toISOString()
+            return result
+        },
+        parseValue(value) {
+            let result = new Date(value)
+            return result
+        },
+        parseLiteral(ast) {
+            switch (ast.kind) {
+            }
+            return null
+        }
+    }),
 
+    Query: {
         recommendations: () => new Promise( (resolve, reject) => {
 
-            query("SELECT id FROM ads")
+            query("SELECT id FROM ads ORDER BY random() LIMIT 8")
                 .then( (ads) => {
-                    const picked = {}
-                    const recommendations = []
-                    let target = 8
-                    if (ads.length < target) {
-                        target = Math.ceil(ads.length / 2)
-                    }
 
-                    while (target > 0) {
-                        target -= 1
-
-                        let ad = ads[Math.floor(Math.random()*ads.length)]
-
-                        while(picked[ad.id]) {
-                            ad = ads[Math.floor(Math.random()*ads.length)]
-                        }
-
-                        picked[ad.id] = true
-
-                        recommendations.push({
+                    const recommendations = ads.map( (ad) => {
+                        return {
                             id: ad.id,
                             adId: ad.id,
-                        })
-                    }
+                        }
+                    })
 
                     resolve(recommendations)
                 })
@@ -37,20 +41,17 @@ export default {
                     reject(err)
                 })
         }),
-
     },
 
     Recommendation: {
-        ad: ({adId}) => new Promise( (resolve, reject) => {
+        ad: findOne('ads.id == adId')
+    },
 
-            query("SELECT * FROM ads WHERE id = $1 LIMIT 1", adId)
-                .then( (rows) =>
-                    resolve(rows[0])
-                )
-                .catch( (err) =>
-                    reject(err)
-                )
+    Ad: {
+        user: findOne('users.id == userId')
+    },
 
-        }),
+    User: {
+        profile: findOne('profiles.userId == id')
     }
 }

@@ -36,8 +36,8 @@ export default `
         address: String!
         hours: String!
         imageId: String
-        profileId: String!
-        profile: Profile!
+        userId: String!
+        user: User!
     }
 
     type Balance {
@@ -232,5 +232,6 @@ export default `
     type User {
         id: ID!
         createdAt: Date!
+        profile: Profile!
     }
 `
