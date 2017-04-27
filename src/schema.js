@@ -7,6 +7,9 @@ export default `
 
     type Query {
         recommendations: [Recommendation]
+        ad(id: ID): Ad!
+        profile(userId: ID): Profile!
+
     }
 
     type Recommendation {
@@ -16,25 +19,14 @@ export default `
         ad: Ad!
     }
 
-    type Profile {
-        id: ID!
-        createdAt: Date!
-        userId: ID!
-        firstName: String!
-        lastName: String!
-        description: String!
-        imageId: String
-        language: String
-    }
-
     type Ad {
         id: ID!
         createdAt: Date!
         userId: ID!
-        title: String!
+        name: String!
         description: String!
         address: String!
-        hours: String!
+        hours: String
         imageId: String
         userId: String!
         user: User!
@@ -203,7 +195,7 @@ export default `
         userId: ID!
         firstName: String!
         lastName: String!
-        description: String!
+        description: String
         imageId: ID
         language: String
     }

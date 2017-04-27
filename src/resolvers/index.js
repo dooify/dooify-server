@@ -41,6 +41,12 @@ export default {
                     reject(err)
                 })
         }),
+
+        ad: (root, {id}) =>
+            query("SELECT * FROM ads WHERE id = $1", id).first(),
+
+        profile: (root, {userId}) =>
+            query("SELECT * FROM profiles WHERE userId = $1", userId).first(),
     },
 
     Recommendation: {

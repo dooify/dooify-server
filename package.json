@@ -16,12 +16,14 @@
     "dependencies": {
         "body-parser": "^1.17.1",
         "colors": "^1.1.2",
+        "cors": "^2.8.3",
         "express": "^4.15.2",
         "graphql": "^0.9.1",
         "graphql-server-express": "^0.6.0",
         "graphql-tools": "^0.10.1",
         "node-uuid": "^1.4.8",
         "pg": "^6.1.5",
+        "sharp": "^0.17.3",
         "source-map-support": "^0.4.14"
     },
     "devDependencies": {

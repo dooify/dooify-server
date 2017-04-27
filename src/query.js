@@ -17,38 +17,50 @@ const config = {
 
 const pool = new pg.Pool(config);
 
-const Query = (query, ...args) => new Promise( (resolve, reject) => {
-    // convert camelcase to snake case
-    query = query.replace(/[a-z]+[A-Z]\w+/g, (t) =>
-        t.replace(/[A-Z]/g, (t2) => "_"+t2.toLowerCase() )
-    )
-    pool.connect(function(err, client, done) {
-        if (err) {
-            console.log('Err in SQL connect!')
-            throw err;
-        }
-
-        let timing = new Date().getTime()
-        client.query(query, args, function(err, results) {
-            var ref, rows, sql, table;
+const Query = (query, ...args) => {
+    const promise = new Promise( (resolve, reject) => {
+        // convert camelcase to snake case
+        query = query.replace(/[a-z]+[A-Z]\w+/g, (t) =>
+            t.replace(/[A-Z]/g, (t2) => "_"+t2.toLowerCase() )
+        )
+        pool.connect(function(err, client, done) {
             if (err) {
+                console.log('Err in SQL connect!')
                 throw err;
             }
-            timing = new Date().getTime() - timing;
-            if (timing > 50) {
-                ref = sqlify(query, args), table = ref[0], sql = ref[1];
-                rows = (results.rows.length.toString()) + " row";
-                if (results.rows.length > 1) {
-                    rows += "s";
+
+            let timing = new Date().getTime()
+            client.query(query, args, function(err, results) {
+                var ref, rows, sql, table;
+                if (err) {
+                    throw err;
                 }
-                rows = pad(rows, 8).magenta;
-                console.log(pad(timing + "ms ", 6).cyan, table, rows, sql);
-            }
-            done();
-            resolve(results.rows.map( (row) => camelize(row)))
+                timing = new Date().getTime() - timing;
+                if (timing > 0) {
+                    ref = sqlify(query, args), table = ref[0], sql = ref[1];
+                    rows = (results.rows.length.toString()) + " row";
+                    if (results.rows.length > 1) {
+                        rows += "s";
+                    }
+                    rows = pad(rows, 8).magenta;
+                    console.log(pad(timing + "ms ", 6).cyan, table, rows, sql);
+                }
+                done();
+                resolve(results.rows.map( (row) => camelize(row)))
+            });
         });
     });
-});
+
+    promise.first = () => promise.then((items) => {
+        if (items[0]) {
+            return items[0]
+        } else {
+            throw new Error("No such entry")
+        }
+    })
+
+    return promise
+}
 
 Query.end = function() {
     return pg.end();
