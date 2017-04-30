@@ -1,6 +1,7 @@
 import query from '../query'
 import {findOne} from './commonTasks'
 import { GraphQLScalarType } from 'graphql'
+import getBalance from '../business/getBalance'
 
 export default {
     Date: new GraphQLScalarType({
@@ -47,6 +48,17 @@ export default {
 
         profile: (root, {userId}) =>
             query("SELECT * FROM profiles WHERE userId = $1", userId).first(),
+
+        userStatus: (o, a, {user}) => {
+            return getBalance(user.id)
+                .then( (balance) => {
+                    console.log('=============')
+                    console.log(balance)
+                    return {
+                        balance,
+                    }
+                })
+        }
     },
 
     Recommendation: {

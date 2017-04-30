@@ -6,18 +6,21 @@ import schema from '../schema'
 
 export default function c(app) {
     const executableSchema = makeExecutableSchema({
-      typeDefs: schema,
-      resolvers,
+        typeDefs: schema,
+        resolvers,
     })
 
     app.post('/graphql',
-      bodyParser.json(),
-      graphqlExpress(() => ({
-        schema: executableSchema,
-      }))
+        bodyParser.json(),
+        graphqlExpress((req) => ({
+            schema: executableSchema,
+            context: {
+                user: req.session.passport.user,
+            }
+        }))
     )
 
     app.use('/graphiql', graphiqlExpress({
-      endpointURL: '/graphql',
+        endpointURL: '/graphql',
     }))
 }

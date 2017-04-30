@@ -9,8 +9,8 @@ const app = express()
 
 cors(app)
 session(app)
-graphql(app)
 images(app)
 passport(app)
+graphql(app)
 
 app.listen(8080)

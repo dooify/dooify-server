@@ -9,7 +9,11 @@ export default `
         recommendations: [Recommendation]
         ad(id: ID): Ad!
         profile(userId: ID): Profile!
+        userStatus: UserStatus!
+    }
 
+    type UserStatus {
+        balance: Int!
     }
 
     type Recommendation {
