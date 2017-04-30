@@ -11,5 +11,6 @@ cors(app)
 session(app)
 graphql(app)
 images(app)
+passport(app)
 
 app.listen(8080)
