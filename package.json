@@ -7,7 +7,7 @@
         "test": "mocha",
         "start": "node dist/index",
         "build": "babel src -d dist --source-maps",
-        "watch": "babel-watch src/index",
+        "watch": "if [ -f .env ]; then env $(cat .env | xargs) babel-watch src/index.js; else babel-watch src/index.js; fi",
         "eslint": "eslint src test",
         "clean": "rimraf dist"
     },

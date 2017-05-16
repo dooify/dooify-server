@@ -52,14 +52,13 @@ function calculateBalance(userId) {
             FROM referrals
             WHERE lucaUserId = $1
         `, userId),
-    ])
-        .then( ([hoursSold, hoursBought, bonuses, vitos, lucas]) => {
-            let balance =
-                hoursSold.reduce((o,t)=>o+parseInt(t), 0) -
-                hoursBought.reduce((o,t)=>o+parseInt(t), 0) +
-                bonuses.reduce((o,t)=>o+parseInt(t), 0) +
-                vitos.length +
-                lucas.length
-            return balance
-        })
+    ]).then( ([hoursSold, hoursBought, bonuses, vitos, lucas]) => {
+        let balance =
+            hoursSold.reduce((o,t)=>o+parseInt(t), 0) -
+            hoursBought.reduce((o,t)=>o+parseInt(t), 0) +
+            bonuses.reduce((o,t)=>o+parseInt(t), 0) +
+            vitos.length +
+            lucas.length
+        return balance
+    })
 }

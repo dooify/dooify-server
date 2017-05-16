@@ -15,7 +15,7 @@ export default function c(app) {
         graphqlExpress((req) => ({
             schema: executableSchema,
             context: {
-                user: req.session.passport.user,
+                user: req.session.passport && req.session.passport.user,
             }
         }))
     )

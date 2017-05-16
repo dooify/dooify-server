@@ -51,11 +51,14 @@ export default function c(app) {
     app.get(
         '/login',
         (req, res) => {
-            const {user} = req.session.passport
+            const fail = () => { res.json({error: 'not logged in'}) }
+            const {passport} = req.session
 
-            const fail = () => {
-                res.json({error: 'not logged in'})
+            if (!passport) {
+                fail()
+                return
             }
+            const {user} = req.session.passport
 
             if (!user) {
                 fail()
